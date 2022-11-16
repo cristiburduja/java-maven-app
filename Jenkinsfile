@@ -1,59 +1,100 @@
-def gv 
 pipeline {
     agent any 
-    tools {
-        maven 'Maven'  // numele din Global Tool Configuration
-    }
+
         stages {
+              
+                stage("build") {
+                    steps {
+                       echo 'aici puit sh npm install'
 
-                stage("init groovy") {
-                    steps 
-                            {
-                                script {
-                                    gv =load "script.groovy"   //name of script groovy
-
-                                }
-
-                            }
+                    }
 
                 }
-                stage("build jar") {
+
+                stage("test"){
+                    steps{
+                        echo 'tests going'
+
+                    }
+
+                }
+                stage("deploy") {
                     steps {
-                        script {
-                            sh "mvn clean package"   //always clean THE PREVOIUS JAR FILE
-                            echo "building the maven app "
-                            gv.buildApp()
+                       
                         }
 
                     }
 
                 }
 
-                stage("build docker image ") {
-                    steps {
-                        script {
-
-                            echo "building the docker image "
-                         // docker login docker push  docker build 
-                         withCredentials([usernamePassword(credentialsId:'docker-hubrepo',passwordVariable: 'PASS',usernameVariable:'USER')])        // usernamePassword -> type of the Credentials 
-                                                        // poti pune orice nume la PASS si USER
-                                        { // now I am logged and I can execute docker comands
-                                            sh 'docker build -t hugoodevops/java-maven:1.0 .'
-                                            sh "echo $PASS | docker login -u $USER --password-stdin"   // docker host after stdin if you push on AWS
-                                            sh 'docker push hugoodevops/java-maven:1.0'
-
-                                        }
-                        }
-
-                    }
-
-                }
-
-
-
-        }
+            }
     
-}
+
+
+
+
+
+
+
+
+//-------------------------------
+
+// def gv 
+// pipeline {
+//     agent any 
+//     tools {
+//         maven 'Maven'  // numele din Global Tool Configuration
+//     }
+//         stages {
+
+//                 stage("init groovy") {
+//                     steps 
+//                             {
+//                                 script {
+//                                     gv =load "script.groovy"   //name of script groovy
+
+//                                 }
+
+//                             }
+
+//                 }
+//                 stage("build jar") {
+//                     steps {
+//                         script {
+//                             sh "mvn clean package"   //always clean THE PREVOIUS JAR FILE
+//                             echo "building the maven app "
+//                             gv.buildApp()
+//                         }
+
+//                     }
+
+//                 }
+
+//                 stage("build docker image ") {
+//                     steps {
+//                         script {
+
+//                             echo "building the docker image "
+//                          // docker login docker push  docker build 
+//                          withCredentials([usernamePassword(credentialsId:'docker-hubrepo',passwordVariable: 'PASS',usernameVariable:'USER')])        // usernamePassword -> type of the Credentials 
+//                                                         // poti pune orice nume la PASS si USER
+//                                         { // now I am logged and I can execute docker comands
+//                                             sh 'docker build -t hugoodevops/java-maven:1.0 .'
+//                                             sh "echo $PASS | docker login -u $USER --password-stdin"   // docker host after stdin if you push on AWS
+//                                             sh 'docker push hugoodevops/java-maven:1.0'
+
+//                                         }
+//                         }
+
+//                     }
+
+//                 }
+
+
+
+//         }
+    
+// }
 
 
 
