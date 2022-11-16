@@ -4,10 +4,9 @@ pipeline {
          maven 'Maven'  // numele din Global Tool Configuration
        }
         stages {
-                
                 stage("build") {
                     steps {
-                        sh 'mvn package'
+                    sh 'mvn package'
                        echo 'aici puit sh npm install'
 
                     }
@@ -22,7 +21,8 @@ pipeline {
 
                 }
                 stage("deploy") {
-                    steps {
+                    steps { 
+                        echo 'deeploy going'
                        
                         }
 
