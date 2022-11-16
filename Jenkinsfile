@@ -1,10 +1,13 @@
 pipeline {
     agent any 
-
+        tools {
+         maven 'Maven'  // numele din Global Tool Configuration
+       }
         stages {
-              
+                
                 stage("build") {
                     steps {
+                        sh 'mvn package'
                        echo 'aici puit sh npm install'
 
                     }
